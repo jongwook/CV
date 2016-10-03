@@ -326,6 +326,10 @@
 % Usage: \twitter{<twitter handle>}
 \newcommand*{\twitter}[1]{\def\@twitter{#1}}
 
+% Defines writer's birthday (optional)
+% Usage: \birthday{<birthday>}
+\newcommand*{\birthday}[1]{\def\@birthday{#1}}
+
 % Defines writer's quote (optional)
 % Usage: \quote{<quote>}
 \renewcommand*{\quote}[1]{\def\@quote{#1}}
@@ -484,7 +488,17 @@
             }
             {\@headersocialsep}
           \faSkype\ \@skype
-        }
+        }%
+      \ifthenelse{\isundefined{\@birthday}}
+        {}
+        {
+          \ifbool{isstart}
+            {
+      	      \setbool{istart}{false} 
+      	    }
+      	    {\@headersocialsep}
+      	    \faBirthdayCake\ \@birthday
+        }%
     } \\
     \ifthenelse{\isundefined{\@quote}}
       {}
@@ -540,8 +554,8 @@
       {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
       {\entrytitlestyle{#2} & \entrylocationstyle{#3} \\[-0.25em]
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
-    \multicolumn{2}{L{17cm}}{\descriptionstyle{#5}} \\[-0.25em]
-  \end{tabular*}
+    \multicolumn{2}{L{17cm}}{\descriptionstyle{#5}} \\
+  \end{tabular*}%
 }
 \newcommand*{\cvsimpleentry}[4]{
 	\setlength\tabcolsep{0pt}
@@ -641,6 +655,19 @@
   \end{itemize}
   \end{justify}
   \vspace{-2mm}
+}
+
+\newenvironment{cvitemscondensed}{
+	\vspace{-4mm}
+	\begin{justify}
+		\begin{itemize}[leftmargin=2ex, nosep]
+			\setlength{\parskip}{0pt}
+			\renewcommand{\labelitemi}{\bullet}
+			%    \scriptsize
+		}{
+	\end{itemize}
+\end{justify}
+\vspace{-2mm}
 }
 
 
