@@ -621,7 +621,7 @@
 \newcommand*{\cvsoftware}[3]{
 	\setlength\tabcolsep{0pt}
 	\setlength{\extrarowheight}{0pt}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{4cm} L{13cm}}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{3.5cm} L{14cm}}
 		\softwaretitlestyle{\href{#1}{#2}} & \softwaretextstyle{#3} 
 	\end{tabular*}
 }
