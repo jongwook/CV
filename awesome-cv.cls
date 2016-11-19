@@ -95,7 +95,9 @@
 }
 \RequirePackage{datetime}
 \RequirePackage{graphics}
-
+\RequirePackage{ifmtarg}
+\RequirePackage{xspace}
+\RequirePackage{xifthen}
 
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
@@ -538,8 +540,19 @@
       {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
       {\entrytitlestyle{#2} & \entrylocationstyle{#3} \\[-0.25em]
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
-    \multicolumn{2}{L{17cm}}{\descriptionstyle{#5}} \\
+		\multicolumn{2}{L{17cm}}{\descriptionstyle{#5}} \\
   \end{tabular*}%
+}
+\newcommand*{\cvwideentry}[5]{
+	\setlength\tabcolsep{0pt}
+	\setlength{\extrarowheight}{0pt}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{14.5cm} R{2.5cm}}
+		\ifempty{#2#3}
+		{\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+		{\entrytitlestyle{#2} & \entrylocationstyle{#3} \\[-0.25em]
+			\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+		\multicolumn{2}{L{17cm}}{\descriptionstyle{#5}} \\
+	\end{tabular*}%
 }
 \newcommand*{\cvsimpleentry}[4]{
 	\setlength\tabcolsep{0pt}

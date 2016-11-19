@@ -21,6 +21,7 @@
 
 \documentclass[12pt, a4paper]{awesome-cv}
 
+
 %%% Override a directory location for fonts(default: 'fonts/')
 \fontdir[fonts/]
 
@@ -41,6 +42,16 @@
 %\definecolor{graytext}{HTML}{414141}
 %\definecolor{lighttext}{HTML}{414141}
 
+
+\newif\iflong
+
+% uncomment for the CV, comment for résumé
+% \longtrue
+
+\newcommand{\verbose}[1]{\iflong{#1}\fi}
+\newcommand{\concise}[1]{\iflong\else{#1}\fi}
+\newcommand{\shortlong}[2]{\iflong\textbf{#1}\xspace#2\else#1\fi}
+
 %%% Override a separator for social informations in header(default: ' | ')
 %\headersocialsep[\quad\textbar\quad]
 
@@ -50,7 +61,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Needed to divide into several files
 \usepackage{import}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Personal Data
@@ -66,9 +76,11 @@
 \linkedin{jongwook-kim}
 \birthday{July 8, 1990}
 %%% Optionals
-\position{Software Engineer{\enskip\cdotp\enskip}Data Scientist{\enskip\cdotp\enskip}Music Informaticist}
-\quote{``Vouloir, c'est pouvoir"}
 
+\iflong
+	\position{Software Engineer{\enskip\cdotp\enskip}Data Scientist{\enskip\cdotp\enskip}Music Informaticist}
+	\quote{``Vouloir, c'est pouvoir"}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Content
@@ -77,8 +89,8 @@
 \newdateformat{monthyear}{\monthname[\THEMONTH] \THEYEAR}
 \makecvfooter
 {\monthyear\today}
-{Jong Wook Kim~~~·~~~Curriculum Vitae}
-{\thepage}
+{\verbose{Jong Wook Kim~~~·~~~Curriculum Vitae}\concise{R\'{e}sum\'{e}}}
+{\verbose{\thepage}\concise{Jong Wook Kim}}
 
 \begin{document}
 	%%% Make a header for CV with personal data
@@ -94,9 +106,11 @@
 		{Apr 2016 - Present}
 		{
 			\begin{cvitems}
-				\item \textbf{Analyzing and improving the collaborative filtering algorithms} for music recommendation at iHeartRadio, focusing on the relations between multiple entities using techniques including factorization machines, collective matrix factorization, and hypergraph learning.
+				\item \shortlong{Analyzing and improving the collaborative filtering algorithms for music recommendation}
+				{at iHeartRadio, focusing on the relations between multiple entities using techniques including factorization machines, collective matrix factorization, and hypergraph learning.}
 			\end{cvitems}
 		}
+		\concise{\\[-0.5em]}
 		\cventry
 		{Recommender System Engineer \& Data Scientist}
 		{Kakao Corporation}
@@ -104,14 +118,22 @@
 		{Jun 2014 - Aug 2015}
 		{
 			\begin{cvitems}
-				\item \textbf{Developed Apache Spark applications for the company's recommender systems} which were gradually being migrated from Apache Hive, and built a framework around Spark called CueSheet, which helps simplify the development cycle of Spark jobs by automating the application packaging and separating the concerns of the implementation and the configuration.
-				\item \textbf{Developed a distributed API server in Scala} that delivers personalized recommendations in various domains, which were precomputed and stored in the databases such as HBase and Couchbase. The deployment and scaling was managed using Marathon, and the system supported bucket testing for evaluating different recommendation algorithms on-line.
-				\item \textbf{Designed and developed a distributed and fault-tolerant stream processing framework} built atop Apache Kafka, providing stream manipulation primitives such as filter, transformer and joiner for the modular implementation of streaming jobs. Joiner, in particular, leveraged in-memory data grids to combine two input streams which may have arbitrarily ordered data  in real-time.
-				\item \textbf{Made a core utility library in Scala} for the API servers and Spark applications being developed in the team, focusing on the simple and thread-safe usage. In addition to the basic IO and JSON conversion utilities, the library enabled easier nonblocking access to various endpoints that the team was using, including ElasticSearch, ZooKeeper, OpenTSDB, HBase, Couchbase, and HTTP servers.
-				\item \textbf{Leveraged OpenTSDB and Grafana to record and visualize the real-time statistics} of the various kinds of applications running in the distributed architecture. Using ring buffers, the systems were able to publish real-time metrics without affecting the performance, and they were reflected in the report within seconds, helping quickly identify the trends as well as any unexpected behaviors.
-				\item Built and maintained a Jenkins cluster that runs mission-critical Hadoop jobs for the company's recommender systems.
+				\item \shortlong{Developed Apache Spark applications for the company's recommender systems}
+				{which were gradually being migrated from Apache Hive, and built a framework around Spark called CueSheet, which helps simplify the development cycle of Spark jobs by automating the application packaging and separating the concerns of the implementation and the configuration.}
+				\item \shortlong{Developed a distributed API server in Scala that delivers personalized recommendations}
+				{in various domains, which were precomputed and stored in the databases such as HBase and Couchbase. The deployment and scaling was managed using Marathon, and the system supported bucket testing for evaluating different recommendation algorithms on-line.}
+				\item \shortlong{Designed and developed a distributed and fault-tolerant stream processing framework}
+				{built atop Apache Kafka, providing stream manipulation primitives such as filter, transformer and joiner for the modular implementation of streaming jobs. Joiner, in particular, leveraged in-memory data grids to combine two input streams which may have arbitrarily ordered data  in real-time.}
+				\verbose{
+					\item \shortlong{Made a core utility library in Scala}
+					{for the API servers and Spark applications being developed in the team, focusing on the simple and thread-safe usage. In addition to the basic IO and JSON conversion utilities, the library enabled easier nonblocking access to various endpoints that the team was using, including ElasticSearch, ZooKeeper, OpenTSDB, HBase, Couchbase, and HTTP servers.}
+				}
+				\item \shortlong{Leveraged OpenTSDB and Grafana to record and visualize \verbose{the }real-time statistics}
+				{of the various kinds of applications running in the distributed architecture. Using ring buffers, the systems were able to publish real-time metrics without affecting the performance, and they were reflected in the report within seconds, helping quickly identify the trends as well as any unexpected behaviors.}
+				\verbose{\item Built and maintained a Jenkins cluster that runs mission-critical Hadoop jobs for the company's recommender systems.}
 			\end{cvitems}
 		}
+		\concise{\\[-0.5em]}
 		\cventry
 		{Game Server Platform Developer}
 		{NCSOFT Corporation}
@@ -119,13 +141,14 @@
 		{Aug 2012 - Jun 2014}
 		{
 			\begin{cvitems}
-				\item \textbf{Designed and developed a distributed server platform} for Lineage Eternal, the company's upcoming massively multiplayer online role-playing game (MMORPG).
+				\item \shortlong{Designed and developed a distributed server platform for Lineage Eternal}{, the company's upcoming massively multiplayer online role-playing game (MMORPG).
 				The platform was composed of a number of fault-tolerant clusters of Java and C++ servers, built using Netty/RxJava and Boost ASIO for the asynchronous and nonblocking IO.
-				Its goal was to make the game playable without requiring the users to select and be limited to only one among many game servers.
-				\item Built a cross-platform logging library in C++ that resembles SLF4j, to be used in Lineage Eternal's game servers.
-				\item Managed the Perforce source control server, which had millions of files being shared among the team of 100+ members.
+				Its goal was to make the game playable without requiring the users to select and be limited to only one among many game servers.}
+				\item Built a cross-platform logging library in C++ that resembles SLF4j, to be used in Lineage Eternal's game servers\verbose{.}
+				\verbose {\item Managed the Perforce source control server, which had millions of files being shared among the team of 100+ members.}
 			\end{cvitems}
 		}
+		\concise{\\[-0.5em]}
 		\cventry
 		{Game Developer Intern}
 		{NCSOFT Corporation}
@@ -133,148 +156,176 @@
 		{May 2011 - Aug 2011}
 		{
 			\begin{cvitems}
-				\item Developed the pathfinding engine of Lineage Eternal, used in both the game client and server, built on top of Havok AI.
+				\item Developed the pathfinding engine of Lineage Eternal, used in both the game client and server, built on top of Havok AI\verbose{.}
 			\end{cvitems} 
 		}
-		\cventry
-		{Educational Software Developer}
-		{University of Michigan}
-		{Ann Arbor, MI}
-		{May 2010 - Aug 2010}
-		{
-			\begin{cvitems}
-				\item Developed interactive educational software visualizing molecular movements in Processing, for the thermodynamics class.
-			\end{cvitems} 
+		\verbose{
+			\cventry
+			{Educational Software Developer}
+			{University of Michigan}
+			{Ann Arbor, MI}
+			{May 2010 - Aug 2010}
+			{
+				\begin{cvitems}
+					\item Developed interactive educational software visualizing molecular movements in Processing, for the thermodynamics class.
+				\end{cvitems} 
+			}
 		}
-		\cventry
-		{Web Developer \& System Administrator}
-		{Techno Press}
-		{Daejeon, S. Korea}
-		{Jan 2009 - Jun 2009}
-		{
-			\begin{cvitems}
-				\item Developed a website for Techno Press, a publisher of international journals in the field of civil engineering.
-			\end{cvitems} 
+		\verbose{
+			\cventry
+			{Web Developer \& System Administrator}
+			{Techno Press}
+			{Daejeon, S. Korea}
+			{Jan 2009 - Jun 2009}
+			{
+				\begin{cvitems}
+					\item Developed a website for Techno Press, a publisher of international journals in the field of civil engineering.
+				\end{cvitems} 
+			}
 		}
 	\end{cventries}
 	
-	
+	\concise{\vspace{-1em}}
 	\cvsection{Education}
 	\begin{cventries}
 		\cventry
-		{Ph.D. (in progress) in Music Technology}
+		{Ph.D. (anticipated May 2019) in Music Technology\concise{, Advisor: Juan Pablo Bello, GPA 3.76/4.00}}
 		{New York University}
 		{New York, NY}
-		{Sep 2011 - May 2012, Sep 2016 - Present}
+		{Sep 2011 - May 2012, Sep 2015 - Present}
 		{
-			\begin{cvitems}
-				\item Advised by Dr. Juan Pablo Bello, expected graduation in 2019. GPA 3.76/4.00
-				\item The area of research includes music information retrieval, automatic music transcription, and music recommendation.
-				\item Relevant coursework: Probabilistic Graphical Models, Statistical Natural Language Processing, Convex Optimization, Deep Learning.
-			\end{cvitems}
+			\verbose{
+				\begin{cvitems}
+					\item Advised by Dr. Juan Pablo Bello, expected graduation in 2019. GPA 3.76/4.00
+					\item The area of research includes music information retrieval, automatic music transcription, and music recommendation.
+					\item Relevant coursework: Probabilistic Graphical Models, Statistical Natural Language Processing, Convex Optimization, Deep Learning.
+				\end{cvitems}
+			}
 		}
+		\concise{\\[-1em]}
 		\cventry
-		{M.S. in Computer Science and Engineering}
+		{M.S. in Computer Science and Engineering\concise{, Advisor: Georg Essl, GPA 7.76/9.00}}
 		{University of Michigan}
 		{Ann Arbor, MI}
 		{Sep 2009 - Apr 2011}
 		{
-			\begin{cvitems}
-				\item Advised by Dr. Georg Essl, focusing on intelligent systems and interactive music environments. GPA 7.76/9.00
-				\item Relevant coursework: Machine Learning, Information Theory, Advanced Compilers, Advanced Computer Network
-			\end{cvitems}
+			\verbose{
+				\begin{cvitems}
+					\item Advised by Dr. Georg Essl, focusing on intelligent systems and interactive music environments. GPA 7.76/9.00
+					\item Relevant coursework: Machine Learning, Information Theory, Advanced Compilers, Advanced Computer Network
+				\end{cvitems}
+			}
 		}
-		\cventry
-		{B.S. in Electrical Engineering with a Minor in Mathematical Sciences}
+		\concise{\\[-1em]}
+		\cvwideentry
+		{B.S. in Electrical Engineering \concise{(GPA 3.97/4.30)} with a Minor in Mathematical Sciences \concise{(GPA 4.03/4.30), Overall 3.83/4.30}}
 		{Korea Advanced Institute of Science and Technology}
 		{Daejeon, S. Korea}
 		{Sep 2006 - May 2009}
 		{
-			\begin{cvitems}
-				\item {GPA 3.83/4.30, with 3.97/4.30 in electrical engineering and 4.03/4.30 in mathematical sciences.}
-			\end{cvitems}
+			\verbose{
+				\begin{cvitems}
+					\item {GPA 3.83/4.30, with 3.97/4.30 in electrical engineering and 4.03/4.30 in mathematical sciences.}
+				\end{cvitems}
+			}
 		}
-		\cventry
-		{Undergraduate Research Opportunity Program in the Deparment of Mechanical Engineering}
-		{Imperial College London}
-		{London, UK}
-		{Jul 2006}
-		{
-			\begin{cvitems}
-				\item {Developed tools for preprocessing data to be used in finite element method software}
-			\end{cvitems}
+		\concise{\\[-1em]}
+		\verbose{
+			\cventry
+			{Undergraduate Research Opportunity Program in the Deparment of Mechanical Engineering}
+			{Imperial College London}
+			{London, UK}
+			{Jul 2006}
+			{
+				\begin{cvitems}
+					\item {Developed tools for preprocessing data to be used in finite element method software}
+				\end{cvitems}
+			}
 		}
-		\cvsimpleentry
-		{}
-		{Korea Science Academy of KAIST}
-		{Busan, S. Korea}
-		{Mar 2004 - Aug 2006}
-	\end{cventries}
-
-	\cvsection{Teaching}
-	\begin{cventries}
-		\cventry
-		{Teaching Assistant - MPATE-GE 2623 Music Information Retrieval, EL9173 Audio Content Analysis}
-		{New York University}
-		{New York, NY}
-		{Sep 2015 - May 2016}
-		{
-			\begin{cvitems}
-				\item {Assited in teaching the ceoncepts of music informatics, held office hours, and graded written and programming assignments.}
-			\end{cvitems}
-		}
-		\cventry
-		{Grader - EECS492 Introduction to Artificial Intelligence}
-		{University of Michigan}
-		{Ann Arbor, MI}
-		{Jan 2011 - Apr 2011}
-		{
-			\begin{cvitems}
-				\item {Graded written and programming assignments.}
-			\end{cvitems}
-		}
-		\cventry
-		{Teaching Assistant - CS101 Introduction to Programming}
-		{Korea Advanced Institute of Science and Technology}
-		{Daejeon, S. Korea}
-		{Sep 2008 - May 2009}
-		{
-			\begin{cvitems}
-				\item {Taught the basic concepts of object-oriented programming in Java and graded programming assignments.}
-			\end{cvitems}
-		}
-		\cventry
-		{Head Teaching Assistant - Information Classes}
-		{KAIST Global Institute for Talented Education}
-		{Daejeon, S. Korea}
-		{Dec 2006 - Jan 2008}
-		{
-			\begin{cvitems}
-				\item {Developed materials and taught college-level computer science and electrical engineering to high school students.}
-			\end{cvitems}
+		\verbose{
+			\cvsimpleentry
+			{}
+			{Korea Science Academy of KAIST}
+			{Busan, S. Korea}
+			{Mar 2004 - Aug 2006}
 		}
 	\end{cventries}
 
-	\cvsection{Publication}
-	\begin{cventries}
-		\cvpublication
-		{Concepts and practical considerations of platform-independent design of mobile music environments}
-		{J. W. Kim \& G. Essl, in \textit{Proceedings of the International Computer Music Conference}}
-		{Jul 2011}
-	\end{cventries}
+	\verbose{
+		\cvsection{Teaching}
+		\begin{cventries}
+			\cventry
+			{Teaching Assistant - MPATE-GE 2623 Music Information Retrieval, EL9173 Audio Content Analysis}
+			{New York University}
+			{New York, NY}
+			{Sep 2015 - May 2016}
+			{
+				\begin{cvitems}
+					\item {Assited in teaching the ceoncepts of music informatics, held office hours, and graded written and programming assignments.}
+				\end{cvitems}
+			}
+			\cventry
+			{Grader - EECS492 Introduction to Artificial Intelligence}
+			{University of Michigan}
+			{Ann Arbor, MI}
+			{Jan 2011 - Apr 2011}
+			{
+				\begin{cvitems}
+					\item {Graded written and programming assignments.}
+				\end{cvitems}
+			}
+			\cventry
+			{Teaching Assistant - CS101 Introduction to Programming}
+			{Korea Advanced Institute of Science and Technology}
+			{Daejeon, S. Korea}
+			{Sep 2008 - May 2009}
+			{
+				\begin{cvitems}
+					\item {Taught the basic concepts of object-oriented programming in Java and graded programming assignments.}
+				\end{cvitems}
+			}
+			\cventry
+			{Head Teaching Assistant - Information Classes}
+			{KAIST Global Institute for Talented Education}
+			{Daejeon, S. Korea}
+			{Dec 2006 - Jan 2008}
+			{
+				\begin{cvitems}
+					\item {Developed materials and taught college-level computer science and electrical engineering to high school students.}
+				\end{cvitems}
+			}
+		\end{cventries}
+	}
+	\verbose{
+		\cvsection{Publication}
+		\begin{cventries}
+			\cvpublication
+			{Concepts and practical considerations of platform-independent design of mobile music environments}
+			{J. W. Kim \& G. Essl, in \textit{Proceedings of the International Computer Music Conference}}
+			{Jul 2011}
+		\end{cventries}
+	}
 	
+	\concise{\vspace{-0.5em}}
 	\cvsection{Presentations}
 	\begin{cventries}
+		\cvsimpleentry
+		{Spark Summit East 2017}
+		{Packaging Applications for Deployment}
+		{Boston, MA}
+		{Scheduled Feb 2017}
 		\cvsimpleentry
 		{JuliaCon 2016}
 		{MusicProcessing.jl: Music Information Retrieval in Julia}
 		{Cambridge, MA}
 		{Jun 2016}
-		\cvsimpleentry
-		{GDG DevFest Korea 2014}
-		{Functional Reactive Programing with dart:async}
-		{Seoul, S. Korea}
-		{May 2014}
+		\verbose{
+			\cvsimpleentry
+			{GDG DevFest Korea 2014}
+			{Functional Reactive Programing with dart:async}
+			{Seoul, S. Korea}
+			{May 2014}
+		}
 		\cvsimpleentry
 		{Nexon Developer Conference 2014}
 		{Building High Performance Servers with Rx and Functional Reactive Programming}
@@ -282,7 +333,7 @@
 		{May 2014}
 	\end{cventries}
 	
-	
+	\concise{\vspace{-0.5em}}
 	\cvsection{Honors \& Awards}
 	\begin{cvhonors}
 		\cvhonor
@@ -293,53 +344,65 @@
 		{Kwanjeong Scholarship}
 		{USD 50,000 per year, for 2 years of the M.S. program}
 		{}{2009}
-		\cvhonor
-		{Meritorious Winner}
-		{in the COMAP Mathematical Contest in Modeling 2008}
-		{}{2008}
-		\cvhonor
-		{Korea Presidential Scholarship}
-		{KRW 10,000,000 per year, for 4 years of the B.S. program}
-		{}{2006}
+		\iflong
+			\cvhonor
+			{Meritorious Winner}
+			{in the COMAP Mathematical Contest in Modeling 2008}
+			{}{2008}
+			\cvhonor
+			{Korea Presidential Scholarship}
+			{KRW 10,000,000 per year, for 4 years of the B.S. program}
+			{}{2006}
+		\fi
 	\end{cvhonors}
 	
-	
+	\verbose{
+		
 	\cvsection{Software Projects}
-	\begin{cventries}
-		\cvsoftware{https://github.com/apache/incubator-s2graph}{Apache S2Graph}{Contributing to the Apache Incubator project, a distributed OLTP graph database.}
-		\cvsoftware{https://github.com/jongwook/MusicProcessing.jl}{MusicProcessing.jl}{A Julia library for music and audio processing.}
-		\cvsoftware{https://github.com/jongwook/spark-ranking-metrics}{spark-ranking-metrics}{Spark implementations of common evaluation metrics for ranking algorithms.}
-		\cvsoftware{https://github.com/jongwook/eval-archiver-loader}{eval-archiver-loader}{A simple utility for compiling Scala code on-the-fly into a byte array and loading it dynamically.}
-		\cvsoftware{https://github.com/jongwook/lyomiTerm}{lyomiTerm}{A MacOS telnet client and VT100 emulator for legacy Korean bulletin board services (BBS).}
-		\cvsoftware{https://github.com/jongwook/pie}{Pie}{An iOS telnet client and VT100 emulator for legacy Korean bulletin board services (BBS).}
-		\cvsoftware{https://github.com/jongwook/croissant}{Croissant}{A Chrome app built with NaCl and TypeScript for music streaming using Google Drive as a storage.}
-		\cvsoftware{https://github.com/jongwook/vbap}{VBAP}{An iOS application that implements vector base amplitude panning (VBAP) using the gyroscope.}
-		\cvsoftware{https://github.com/jongwook/yomi}{Yomi}{A code viewer app for iPad, using libgit2 to clone Git repositories.}
-	\end{cventries}
+		\begin{cventries}
+			\cvsoftware{https://github.com/apache/incubator-s2graph}{Apache S2Graph}{Contributing to the Apache Incubator project, a distributed OLTP graph database.}
+			\cvsoftware{https://github.com/jongwook/MusicProcessing.jl}{MusicProcessing.jl}{A Julia library for music and audio processing.}
+			\cvsoftware{https://github.com/jongwook/spark-ranking-metrics}{spark-ranking-metrics}{Spark implementations of common evaluation metrics for ranking algorithms.}
+			\cvsoftware{https://github.com/jongwook/eval-archiver-loader}{eval-archiver-loader}{A simple utility for compiling Scala code on-the-fly into a byte array and loading it dynamically.}
+			\cvsoftware{https://github.com/jongwook/lyomiTerm}{lyomiTerm}{A MacOS telnet client and VT100 emulator for legacy Korean bulletin board services (BBS).}
+			\cvsoftware{https://github.com/jongwook/pie}{Pie}{An iOS telnet client and VT100 emulator for legacy Korean bulletin board services (BBS).}
+			\cvsoftware{https://github.com/jongwook/croissant}{Croissant}{A Chrome app built with NaCl and TypeScript for music streaming using Google Drive as a storage.}
+			\cvsoftware{https://github.com/jongwook/vbap}{VBAP}{An iOS application that implements vector base amplitude panning (VBAP) using the gyroscope.}
+			\cvsoftware{https://github.com/jongwook/yomi}{Yomi}{A code viewer app for iPad, using libgit2 to clone Git repositories.}
+		\end{cventries}
+	}
 	
+	\verbose{
 	\cvsection{Online Courses}
+		\begin{cventries}
+			\cvsimpleentry
+			{École Centrale Paris}
+			{\href{https://coursera.org/verify/MKHRQJ962G}{An Introduction to Functional Analysis} {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
+			{Coursera}
+			{Mar 2014 - May 2014}
+			\cvsimpleentry
+			{École Polytechnique Fédérale de Lausanne}
+			{Principles of Reactive Programming {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
+			{Coursera}
+			{Nov 2013 - Jan 2014}
+			\cvsimpleentry
+			{École Polytechnique Fédérale de Lausanne}
+			{Functional Programming Principles in Scala {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
+			{Coursera}
+			{Mar 2013 - May 2013}
+		\end{cventries}
+	}
+
+	\cvsection{\verbose{Skills}\concise{Miscellaneous}}
 	\begin{cventries}
-		\cvsimpleentry
-		{École Centrale Paris}
-		{\href{https://coursera.org/verify/MKHRQJ962G}{An Introduction to Functional Analysis} {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
-		{Coursera}
-		{Mar 2014 - May 2014}
-		\cvsimpleentry
-		{École Polytechnique Fédérale de Lausanne}
-		{Principles of Reactive Programming {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
-		{Coursera}
-		{Nov 2013 - Jan 2014}
-		\cvsimpleentry
-		{École Polytechnique Fédérale de Lausanne}
-		{Functional Programming Principles in Scala {\fontsize{8pt}{1em}\bodyfontlight with distinction}}
-		{Coursera}
-		{Mar 2013 - May 2013}
-	\end{cventries}
-	
-	\cvsection{Skills}
-	\begin{cventries}
-		\cvskill{Programming}{Scala, Python, Java, C/C++ professionally, and Julia, ObjC, PHP, JS, TS, Matlab for personal/research projects.}%
-		\cvskill{Music}{Have played the oboe in many orchestras and the piano in bands; also have played the viola and taepyeongso.}%
-		\cvskill{Languages}{English (full professional fluency), Korean (native), Japanese (limited working proficiency)}%
+		\cvskill{Programming \newline}{Scala, Python, Java, C/C++ professionally, and Julia, ObjC, PHP, JS, TS, Matlab for personal/research projects\newline
+			Apache S2Graph committer; contributed to Hazelcast, LightFM, and other open source projects}%
+		\concise{
+			\cvskill{Coursera}{\href{https://coursera.org/verify/MKHRQJ962G}{Intro to Functional Analysis}, Principles of Reactive Programming, Functional Programming Principles in Scala}
+		}
+		\verbose{
+			\cvskill{Music}{Have played the oboe in many orchestras and the piano in bands; also have played the viola and taepyeongso}%
+		}
+		\cvskill{Languages}{English, Korean (native), Japanese (limited working proficiency)}%
 	\end{cventries}%	
 \end{document}
